@@ -12,6 +12,8 @@ import android.widget.ToggleButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import com.example.simpleboggle.databinding.FragmentGameBinding
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 class GameFragment : Fragment() {
     private var _binding: FragmentGameBinding? = null
@@ -20,6 +22,8 @@ class GameFragment : Fragment() {
             "Cannot access binding because it is null. Is the view visible?"
         }
 
+    private val dictionaryFileName = "dictionary.txt"
+    private lateinit var dictionary: List<String>
     private lateinit var letterButtons : List<ToggleButton>
     private lateinit var clearSelectionButton : Button
     private lateinit var submitWordButton : Button
@@ -51,6 +55,7 @@ class GameFragment : Fragment() {
             submitButton.setOnClickListener {
                 submitWord(selectedLetters)
             }
+            dictionary = readDictionaryFile(dictionaryFileName)
 
 
         }
@@ -59,10 +64,46 @@ class GameFragment : Fragment() {
 
     private fun submitWord(selectedLetters: MutableList<String>) {
         val word = selectedLetters.joinToString(separator = "")
+        if (isValidWord(word)) {
+            Toast.makeText(requireContext(), "That's correct", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(requireContext(), "That's incorrect", Toast.LENGTH_SHORT).show()
+        }
+        clearSelection()
     }
 
     private fun isValidWord(word : String) : Boolean {
-        return true
+        if (word.length < 4) {
+            return false
+        }
+
+        val vowels = setOf('a', 'e', 'i', 'o', 'u')
+        val vowelCount = word.count { vowels.contains(it) }
+        if (vowelCount < 2) {
+            return false
+        }
+
+        return dictionary.contains(word)
+    }
+
+    fun readDictionaryFile(fileName: String): List<String> {
+        val assetManager = context?.assets
+        val dictionary = mutableListOf<String>()
+
+        try {
+            val inputStream = assetManager?.open(fileName)
+            val reader = inputStream?.bufferedReader()
+            var line: String?
+            while (reader?.readLine().also { line = it } != null) {
+                dictionary.add(line!!)
+            }
+
+            reader?.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return dictionary
     }
 
     override fun onDestroyView() {
