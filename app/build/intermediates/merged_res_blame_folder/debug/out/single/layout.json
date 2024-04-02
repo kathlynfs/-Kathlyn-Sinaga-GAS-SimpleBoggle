@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "C:\\Users\\kathl\\.gradle\\daemon\\8.2\\com.example.simpleboggle.app-mergeDebugResources-36:\\layout\\fragment_menu.xml",
+        "source": "C:\\Users\\kathl\\.gradle\\daemon\\8.2\\com.example.simpleboggle.app-main-39:\\layout\\fragment_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\kathl\\.gradle\\daemon\\8.2\\com.example.simpleboggle.app-mergeDebugResources-36:\\layout\\fragment_game.xml",
+        "source": "C:\\Users\\kathl\\.gradle\\daemon\\8.2\\com.example.simpleboggle.app-main-39:\\layout\\fragment_game.xml"
+    },
+    {
+        "merged": "C:\\Users\\kathl\\.gradle\\daemon\\8.2\\com.example.simpleboggle.app-mergeDebugResources-36:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\kathl\\.gradle\\daemon\\8.2\\com.example.simpleboggle.app-main-39:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "com.example.simpleboggle.app-mergeDebugResources-36:/layout/fragment_menu.xml",
+        "source": "com.example.simpleboggle.app-main-39:/layout/fragment_menu.xml"
+    }
+]

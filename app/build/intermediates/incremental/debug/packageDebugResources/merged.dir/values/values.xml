@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">SimpleBoggle</string>
+    <string name="clear">CLEAR</string>
+    <string name="game_prompt">Enter a word then hit submit.</string>
+    <string name="new_game_button">NEW GAME</string>
+    <string name="score">SCORE: </string>
+    <string name="starting_score">0</string>
+    <string name="submit">SUBMIT</string>
+    <style name="Base.Theme.SimpleBoggle" parent="Theme.Material3.DayNight.NoActionBar">
+        
+        
+    </style>
+    <style name="Theme.SimpleBoggle" parent="Base.Theme.SimpleBoggle"/>
+</resources>

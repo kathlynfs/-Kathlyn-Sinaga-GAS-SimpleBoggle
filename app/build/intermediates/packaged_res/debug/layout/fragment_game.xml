@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp">
+
+    <TextView
+        android:id="@+id/gamePrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/game_prompt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/boggleLetter2"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gamePrompt" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+         
+        app:layout_constraintEnd_toStartOf="@+id/boggleLetter3"
+        app:layout_constraintStart_toEndOf="@+id/boggleLetter1"
+        app:layout_constraintTop_toBottomOf="@+id/gamePrompt" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+         
+        app:layout_constraintEnd_toStartOf="@+id/boggleLetter4"
+        app:layout_constraintStart_toEndOf="@+id/boggleLetter2"
+        app:layout_constraintTop_toBottomOf="@+id/gamePrompt" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/boggleLetter3"
+        app:layout_constraintTop_toBottomOf="@+id/gamePrompt" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/boggleLetter6"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boggleLetter1" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/boggleLetter7"
+        app:layout_constraintStart_toEndOf="@+id/boggleLetter5"
+        app:layout_constraintTop_toBottomOf="@+id/boggleLetter2" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/boggleLetter8"
+        app:layout_constraintStart_toEndOf="@+id/boggleLetter6"
+        app:layout_constraintTop_toBottomOf="@+id/boggleLetter3" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/boggleLetter7"
+        app:layout_constraintTop_toBottomOf="@+id/boggleLetter4" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/boggleLetter10"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boggleLetter5" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/boggleLetter11"
+        app:layout_constraintStart_toEndOf="@+id/boggleLetter9"
+        app:layout_constraintTop_toBottomOf="@+id/boggleLetter6" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/boggleLetter12"
+        app:layout_constraintStart_toEndOf="@+id/boggleLetter10"
+        app:layout_constraintTop_toBottomOf="@+id/boggleLetter7" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/boggleLetter11"
+        app:layout_constraintTop_toBottomOf="@+id/boggleLetter8" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/boggleLetter14"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boggleLetter9" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/boggleLetter15"
+        app:layout_constraintStart_toEndOf="@+id/boggleLetter13"
+        app:layout_constraintTop_toBottomOf="@+id/boggleLetter10" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/boggleLetter16"
+        app:layout_constraintStart_toEndOf="@+id/boggleLetter14"
+        app:layout_constraintTop_toBottomOf="@+id/boggleLetter11" />
+
+    <ToggleButton
+        android:id="@+id/boggleLetter16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/boggleLetter15"
+        app:layout_constraintTop_toBottomOf="@+id/boggleLetter12" />
+
+    <TextView
+        android:id="@+id/wordInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boggleLetter14" />
+
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/clear"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wordInput" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wordInput" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
