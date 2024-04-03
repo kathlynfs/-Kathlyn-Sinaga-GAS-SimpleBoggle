@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import com.example.simpleboggle.databinding.FragmentGameBinding
 import java.io.BufferedReader
@@ -22,6 +23,8 @@ class GameFragment : Fragment() {
             "Cannot access binding because it is null. Is the view visible?"
         }
 
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+
     private val dictionaryFileName = "dictionary.txt"
     private lateinit var dictionary: List<String>
     private lateinit var letterButtons : List<ToggleButton>
@@ -29,6 +32,8 @@ class GameFragment : Fragment() {
     private lateinit var submitWordButton : Button
     private lateinit var displayWordInput: TextView
     private val selectedLetters = mutableListOf<String>()
+    private val playerWords = mutableListOf<String>()
+
 
 
     override fun onCreateView(
@@ -56,34 +61,76 @@ class GameFragment : Fragment() {
                 submitWord(selectedLetters)
             }
             dictionary = readDictionaryFile(dictionaryFileName)
+            sharedViewModel.newGameTrigger.observe(viewLifecycleOwner) { startNewGameTriggered ->
+                if (startNewGameTriggered) {
+                    resetGame()
+                    sharedViewModel.resetNewGameTrigger()
+                }
+            }
 
 
         }
 
+    }
+
+    private fun resetGame() {
+        setLettersOnButtons()
+        playerWords.clear()
+        val currentScore = sharedViewModel.getScore()
+        sharedViewModel.updateScore(-currentScore)
     }
 
     private fun submitWord(selectedLetters: MutableList<String>) {
         val word = selectedLetters.joinToString(separator = "")
-        if (isValidWord(word)) {
-            Toast.makeText(requireContext(), "That's correct", Toast.LENGTH_SHORT).show()
+        val points = getPoints(word)
+        if (points > 0) {
+            Toast.makeText(requireContext(), "That's correct, $points", Toast.LENGTH_SHORT).show()
+            sharedViewModel.updateScore(points)
+            playerWords.add(word)
+        } else if (points == 0) {
+            Toast.makeText(requireContext(), "You have previously entered that word, $points", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(requireContext(), "That's incorrect", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "That's incorrect, $points", Toast.LENGTH_SHORT).show()
+            sharedViewModel.updateScore(points)
         }
         clearSelection()
+    }
+    
+    private fun getPoints(word : String) : Int {
+        if (playerWords.contains(word)) {
+            return 0
+        }
+
+        if (!isValidWord(word)) {
+            return -10
+        }
+        var consonants = 0
+        var vowels = 0
+        for (char in word) {
+            if (char in setOf('A', 'E', 'I', 'O', 'U')) {
+                vowels++
+            } else {
+                consonants++
+            }
+        }
+        return ((vowels*5)+consonants)
     }
 
     private fun isValidWord(word : String) : Boolean {
         if (word.length < 4) {
+            Toast.makeText(requireContext(), "Please submit at least 4 letters", Toast.LENGTH_SHORT).show()
             return false
         }
 
-        val vowels = setOf('a', 'e', 'i', 'o', 'u')
+        val vowels = setOf('A', 'E', 'I', 'O', 'U')
         val vowelCount = word.count { vowels.contains(it) }
         if (vowelCount < 2) {
+            Toast.makeText(requireContext(), "Please submit at least 2 vowels", Toast.LENGTH_SHORT).show()
             return false
         }
 
-        return dictionary.contains(word)
+        return dictionary.contains(word.lowercase())
+
     }
 
     fun readDictionaryFile(fileName: String): List<String> {
@@ -95,7 +142,7 @@ class GameFragment : Fragment() {
             val reader = inputStream?.bufferedReader()
             var line: String?
             while (reader?.readLine().also { line = it } != null) {
-                dictionary.add(line!!)
+                dictionary.add(line!!.lowercase())
             }
 
             reader?.close()
@@ -120,6 +167,37 @@ class GameFragment : Fragment() {
         updateDisplayWord()
     }
 
+    private fun setLettersOnButtons() {
+        val commonLetters = listOf(
+            'E', 'A', 'R', 'I', 'O', 'T', 'N', 'S', 'L', 'C'
+        )
+        val uncommonLetters = listOf(
+            'M', 'H', 'G', 'B', 'F', 'Y', 'W', 'P', 'U', 'D'
+        )
+        val rareLetters = listOf(
+            'Y', 'V', 'X', 'Z', 'J', 'Q', 'K'
+        )
+        var randomLetter = 'E'
+
+        for (toggleButton in letterButtons) {
+            val randomNumber = (1..100).random()
+
+            if (randomNumber <= 65) {
+                randomLetter = commonLetters.random()
+            } else if (randomNumber <= 95 ) {
+                randomLetter = uncommonLetters.random()
+            } else {
+                randomLetter = rareLetters.random()
+            }
+
+            toggleButton.textOn = randomLetter.toString()
+            toggleButton.textOff = randomLetter.toString()
+            toggleButton.text = randomLetter.toString()
+            toggleButton.isChecked = false
+            toggleButton.isEnabled = true
+        }
+    }
+
     private fun bindLetterButtons() {
         val toggleButtonIds = arrayOf(
             R.id.boggleLetter1, R.id.boggleLetter2, R.id.boggleLetter3, R.id.boggleLetter4,
@@ -132,10 +210,6 @@ class GameFragment : Fragment() {
 
         for ((index, buttonId) in toggleButtonIds.withIndex()) {
             val toggleButton: ToggleButton = binding.root.findViewById(buttonId)
-            val randomLetter = ('A'..'Z').random().toString()
-            toggleButton.textOn = randomLetter
-            toggleButton.textOff = randomLetter
-            toggleButton.text = randomLetter
             toggleButton.tag = index
 
 
@@ -144,7 +218,7 @@ class GameFragment : Fragment() {
                 if (isChecked) {
                     toggleButton.isChecked = false
                     if (!isValidMove(buttonIndex)) {
-                        Toast.makeText(requireContext(), "You cannot select this letter", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "You may only select connected letters", Toast.LENGTH_SHORT).show()
                     } else {
                         toggleButton.isChecked = true
                         toggleButton.isEnabled = false
@@ -159,7 +233,7 @@ class GameFragment : Fragment() {
         }
 
         letterButtons = buttonList
-
+        setLettersOnButtons()
 
     }
 
@@ -198,7 +272,7 @@ class GameFragment : Fragment() {
                 val newC = col + moveC
 
                 // Check if the adjacent position is within bounds
-                if (newR in 0..3 && newC in 0 .. 3) {
+                if (newR in 0..3 && newC in 0..3) {
                     val adjacentButtonIndex = newR * 4 + newC
                     Log.d("AdjacentButton", "Index: $adjacentButtonIndex}")
                     if (letterButtons[adjacentButtonIndex].isChecked) {
@@ -207,7 +281,6 @@ class GameFragment : Fragment() {
                 }
             }
         }
-
         return false
     }
 
