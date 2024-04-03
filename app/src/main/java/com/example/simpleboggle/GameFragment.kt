@@ -33,6 +33,7 @@ class GameFragment : Fragment() {
     private lateinit var displayWordInput: TextView
     private val selectedLetters = mutableListOf<String>()
     private val playerWords = mutableListOf<String>()
+    private var lastSelectedIndex: Int? = null
 
 
 
@@ -168,11 +169,14 @@ class GameFragment : Fragment() {
     }
 
     private fun setLettersOnButtons() {
+        val vowels = listOf (
+            'A', 'E', 'I', 'O', 'U'
+        )
         val commonLetters = listOf(
-            'E', 'A', 'R', 'I', 'O', 'T', 'N', 'S', 'L', 'C'
+            'R', 'T', 'N', 'S', 'L', 'C'
         )
         val uncommonLetters = listOf(
-            'M', 'H', 'G', 'B', 'F', 'Y', 'W', 'P', 'U', 'D'
+            'M', 'H', 'G', 'B', 'F', 'Y', 'W', 'P', 'D'
         )
         val rareLetters = listOf(
             'Y', 'V', 'X', 'Z', 'J', 'Q', 'K'
@@ -182,8 +186,12 @@ class GameFragment : Fragment() {
         for (toggleButton in letterButtons) {
             val randomNumber = (1..100).random()
 
-            if (randomNumber <= 65) {
-                randomLetter = commonLetters.random()
+            if (randomNumber <= 75) {
+                if ((1 .. 10).random() <= 6) {
+                    randomLetter = vowels.random()
+                } else {
+                    randomLetter = commonLetters.random()
+                }
             } else if (randomNumber <= 95 ) {
                 randomLetter = uncommonLetters.random()
             } else {
@@ -224,6 +232,7 @@ class GameFragment : Fragment() {
                         toggleButton.isEnabled = false
                         selectedLetters.add(toggleButton.text.toString())
                         updateDisplayWord()
+                        lastSelectedIndex = toggleButton.tag as Int
                     }
                 }
             }
@@ -273,9 +282,8 @@ class GameFragment : Fragment() {
 
                 // Check if the adjacent position is within bounds
                 if (newR in 0..3 && newC in 0..3) {
-                    val adjacentButtonIndex = newR * 4 + newC
-                    Log.d("AdjacentButton", "Index: $adjacentButtonIndex}")
-                    if (letterButtons[adjacentButtonIndex].isChecked) {
+                    val toTest = newR * 4 + newC
+                    if (toTest == lastSelectedIndex) {
                         return true
                     }
                 }
